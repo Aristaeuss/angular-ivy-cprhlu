@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  margin: 0;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  min-width: 10rem;
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.accordion-content-body {
+  padding: 0.5rem;
+}
