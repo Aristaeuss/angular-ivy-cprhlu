@@ -11,6 +11,8 @@ export class AccordionTitleComponent {
   @Output()
   toggleOpen = new EventEmitter<MouseEvent>();
 
-  @HostListener('keydown', ['$event'])
-  
+  @HostListener('click')
+  onClick() {
+    this.toggleOpen.emit();
+  }
 }
