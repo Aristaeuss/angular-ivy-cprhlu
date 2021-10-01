@@ -3,6 +3,7 @@ import {
   AfterContentInit,
   ContentChild,
   OnDestroy,
+  HostBinding,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,13 +15,15 @@ import { AccordionTitleComponent } from '../accordion-title/accordion-title.comp
   styleUrls: ['./accordion-content.component.scss'],
 })
 export class AccordionContentComponent implements AfterContentInit, OnDestroy {
-  state?: String;
-  id?: number;
+  @HostBinding('class')
+  state: OpenState = 'collapse';
 
   private destroy$ = new Subject<void>();
 
   @ContentChild(AccordionContentComponent, { static: true })
   private accordionTitle: AccordionTitleComponent;
+
+  private _id: number;
 
   constructor() {}
 
@@ -31,10 +34,26 @@ export class AccordionContentComponent implements AfterContentInit, OnDestroy {
       .subscribe(() => this.openCollapse());
   }
 
-  openCollapse() {}
+  set id(val) {
+    this._id = val;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  openCollapse() {
+    this.updateState();
+  }
+
+  private updateState() {
+    this.state = this.state === 'collapse' ? 'open' : 'collapse';
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 }
+
+type OpenState = 'open' | 'collapse';
